@@ -1,6 +1,11 @@
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -16,7 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import data.CrossConfigDevice
@@ -26,9 +34,14 @@ import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
+import myapplication.shared.generated.resources.Res
+import myapplication.shared.generated.resources.photo
 import navigation.Navigation
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.KoinContext
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun App(configDevice: CrossConfigDevice? = null) {
 
@@ -74,16 +87,22 @@ fun App(configDevice: CrossConfigDevice? = null) {
                                 }
                             },
                             actions = {
-                                /* TODO: THIS WORKS FOR ANDROID BUT NOT FOR iOS, THE RESOURCE CAN'T BE FOUND
-                              if (!isEditOrAddExpenses) {
-                              Image(
-                                  modifier = Modifier.size(60.dp).clip(RoundedCornerShape(25)).padding(end = 16.dp),
-                                  painter = painterResource("profile.png"),
-                                  colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) }),
-                                  contentDescription = null
-                              )
-                               }
-                               */
+                                if (!isEditOrAddExpenses) {
+                                    Row(
+                                        modifier = Modifier.padding(end = 8.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Image(
+                                            modifier = Modifier.size(40.dp)
+                                                .clip(RoundedCornerShape(45)),
+                                            painter = painterResource(Res.drawable.photo),
+                                            contentDescription = null
+                                        )
+                                        Spacer(modifier = Modifier.width(4.dp))
+                                        Text(text = "Hello, Gastón", color = colors.textColor)
+                                    }
+
+                                }
                             },
                             backgroundColor = colors.backgroundColor
                         )
